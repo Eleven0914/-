@@ -85,7 +85,7 @@
     }
     
     /* Ensure bottom nav fits */
-    .bottom-nav, .chat-input-area {
+    .bottom-nav {
         position: fixed; /* Still fixed, but relative to body due to transform */
         bottom: 0;
         width: 100% !important;
@@ -95,10 +95,20 @@
         border-bottom-left-radius: 40px; /* Match device corners */
         border-bottom-right-radius: 40px;
         overflow: hidden; /* Ensure content doesn't bleed */
+        z-index: 1000;
+    }
+
+    /* Position Chat Input Area - Let page CSS determine vertical position */
+    .chat-input-area {
+        position: fixed;
+        /* bottom is determined by specific page CSS (0 or 60px) */
+        width: 100% !important;
+        max-width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 999;
     }
     
     /* Fix for input area having square corners */
-    .chat-input-area {
-        border-radius: 0 0 40px 40px !important; 
-    }
+    /* Only apply rounded corners if it's the very bottom element, but here it's not. */
 }
