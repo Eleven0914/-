@@ -1,0 +1,104 @@
+/* Desktop Preview Mode - Simulates a Mobile Device */
+@media screen and (min-width: 768px) {
+    html {
+        background-color: #EEF2F6; /* Presentation background */
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden; /* Prevent scrolling the presentation background */
+    }
+
+    body {
+        /* Device Dimensions (iPhone 14 Pro Max reference) */
+        width: 430px !important;
+        height: 932px !important;
+        max-height: 90vh !important; /* Fit within the viewport height */
+        
+        /* Device Frame Styling */
+        border: 12px solid #111; /* Bezel */
+        border-radius: 55px; /* Device corners */
+        box-shadow: 
+            0 0 0 2px #333, /* Outer rim */
+            0 25px 50px -12px rgba(0, 0, 0, 0.25); /* Drop shadow */
+        
+        /* Layout & Behavior */
+        margin: 0 !important;
+        position: relative;
+        background-color: var(--bg-color, #F5F7FA);
+        
+        /* Magic: Makes position:fixed descendants relative to this container */
+        transform: translate(0); 
+        
+        /* Scroll behavior within the device */
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        
+        /* Hide Scrollbar */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Notch / Dynamic Island Simulation */
+    body::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 35px;
+        background-color: #000;
+        border-bottom-left-radius: 18px;
+        border-bottom-right-radius: 18px;
+        z-index: 9999;
+        pointer-events: none;
+    }
+
+    /* --- SAFE AREA & HEADER ADJUSTMENTS --- */
+    
+    /* WeChat Header (box-sizing: content-box usually) */
+    .wechat-header {
+        padding-top: 40px !important; /* Simulate safe area */
+        height: 44px !important; /* Keep content height */
+    }
+
+    /* Custom Header (usually box-sizing: border-box) */
+    .custom-header {
+        padding-top: 40px !important;
+        height: 84px !important; /* 44px content + 40px padding */
+        align-items: center !important; /* Re-center content */
+    }
+
+    /* Adjust content containers to account for taller header */
+    .main-container {
+        padding-top: 90px !important; /* 84px header + spacing */
+    }
+
+    .main-content {
+        padding-top: 104px !important; /* 84px header + 20px spacing */
+    }
+    
+    /* Ensure bottom nav fits */
+    .bottom-nav, .chat-input-area {
+        position: fixed; /* Still fixed, but relative to body due to transform */
+        bottom: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        border-bottom-left-radius: 40px; /* Match device corners */
+        border-bottom-right-radius: 40px;
+        overflow: hidden; /* Ensure content doesn't bleed */
+    }
+    
+    /* Fix for input area having square corners */
+    .chat-input-area {
+        border-radius: 0 0 40px 40px !important; 
+    }
+}
