@@ -7,11 +7,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            /* 2.1 色彩规范 - Updated (Grey & Red Theme) */
+            /* 2.1 色彩规范 - Updated (Grey & Green/Blue Theme) */
             --primary-color: #5E6E82; /* 苗银灰 - 主色调 */
             --primary-dark: #4A5568; /* 点击态 */
-            --accent-color: #FF7157; /* 刺绣红 - 强调色 */
-            --secondary-color: #2C5282; /* 蜡染蓝 - 搭配色 */
+            --accent-color: #67C23A; /* 淡绿色 - 强调色 */
+            --secondary-color: #409EFF; /* 淡蓝色 - 搭配色 */
             
             --bg-color: #F5F7FA; /* 冷灰白背景 */
             --card-bg: #FFFFFF;
@@ -29,8 +29,8 @@
             --warning-color: #ED8936;
             --error-color: #E53E3E;
             
-            /* 尺寸转换 1rpx = 0.5px (基于375px屏幕) */
-            --nav-height: 49px; /* 98rpx */
+            /* 尺寸转换 1rpx = 0.5px (基于430px屏幕适配) */
+            --nav-height: 60px; /* Increased for new design */
             --header-height: 44px; /* 88rpx */
             --page-padding: 15px; /* 30rpx */
             --card-radius: 8px; /* 16rpx */
@@ -72,7 +72,7 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(94, 110, 130, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 113, 87, 0.05) 0%, transparent 20%);
+                radial-gradient(circle at 90% 80%, rgba(103, 194, 58, 0.05) 0%, transparent 20%);
             pointer-events: none;
         }
 
@@ -410,14 +410,14 @@
             left: 0;
             right: 0;
             height: var(--nav-height);
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid var(--border-color);
+            background: #FFFFFF;
+            border-top: 1px solid #F0F0F0;
             display: flex;
             justify-content: space-around;
             align-items: center;
             padding-bottom: env(safe-area-inset-bottom);
             z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.02);
         }
 
         .nav-item {
@@ -427,39 +427,72 @@
             align-items: center;
             justify-content: center;
             height: 100%;
-            color: var(--text-aux);
+            color: #94A3B8; /* Slate 400 */
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
         }
 
-        .nav-item.active { color: var(--primary-color); }
-        .nav-item.active .nav-icon { transform: scale(1.1); }
-        
+        .nav-icon-wrapper {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 2px;
+            transition: all 0.3s;
+        }
+
         .nav-icon {
-            font-size: 24px;
+            font-size: 20px;
             margin-bottom: 0;
-            transition: transform 0.2s;
+            transition: all 0.3s;
         }
-        .nav-text { display: none; } /* 隐藏文字 */
 
-        /* 导航栏添加按钮 */
-        .nav-item-add {
-             position: relative;
-             height: 49px;
-             display: flex;
-             align-items: center;
-             justify-content: center;
+        .nav-text { 
+            display: block; 
+            font-size: 10px;
+            font-weight: 500;
+            line-height: 1;
         }
-        .add-btn {
-            width: 44px;
-            height: 44px;
-            background-color: var(--accent-color);
+
+        /* Active State */
+        .nav-item.active { 
+            color: var(--secondary-color); /* Pale Blue */
+        }
+        
+        .nav-item.active .nav-icon-wrapper {
+            background-color: #ECF5FF; /* Pale Blue Light Bg */
+        }
+        
+        .nav-item.active .nav-icon { 
+            transform: scale(1);
+            color: var(--secondary-color);
+        }
+
+        /* Center Button */
+        .nav-item-center {
+            padding-top: 0;
+        }
+        
+        .center-btn {
+            width: 48px;
+            height: 48px;
+            background-color: #111827; /* Gray 900 */
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: -20px;
-            box-shadow: 0 4px 10px rgba(255, 113, 87, 0.4);
-            color: var(--text-on-accent);
+            color: #fff;
             font-size: 24px;
+            box-shadow: 0 4px 12px rgba(17, 24, 39, 0.4);
+            transition: transform 0.2s;
+            margin-top: -20px; /* Slight protrusion */
+        }
+        
+        .center-btn:active {
+            transform: scale(0.95);
         }
 
         /* 对话输入框 */
@@ -589,7 +622,7 @@
                     <div class="agent-desc">为您定制专属的贵州行程路线</div>
                     <div class="agent-tag tag-guide">行程定制</div>
                 </div>
-                <div class="agent-card" data-category="assistant" style="background-image: url('https://images.unsplash.com/photo-1542662565-7e4b66b529c1?auto=format&fit=crop&w=400&q=80');">
+                <div class="agent-card" data-category="assistant" style="background-image: url('https://images.unsplash.com/photo-1544256718-3bcf237f3974?auto=format&fit=crop&w=400&q=80');">
                     <div class="agent-name">旅居设计</div>
                     <div class="agent-desc">寻找最适合您的康养旅居地</div>
                     <div class="agent-tag tag-guide">康养生活</div>
@@ -672,7 +705,7 @@
                 <i class="fas fa-microphone"></i>
             </div>
             <input type="text" class="chat-input" placeholder="夜景游玩路线怎么安排?" onkeypress="handleChatEnter(event)">
-            <div class="chat-send-btn" onclick="window.location.href='qa_page.html'">
+            <div class="chat-send-btn" onclick="navigateToQA()">
                 <i class="fas fa-paper-plane"></i>
             </div>
         </div>
@@ -688,7 +721,7 @@
         </div>
         <div class="nav-item">
             <div class="nav-icon-wrapper">
-                <i class="fas fa-map nav-icon"></i>
+                <i class="far fa-map nav-icon"></i>
             </div>
             <span class="nav-text">行程</span>
         </div>
@@ -771,7 +804,19 @@
 
         function handleChatEnter(event) {
             if (event.key === 'Enter') {
-                window.location.href = 'qa_page.html';
+                navigateToQA();
+            }
+        }
+
+        function navigateToQA() {
+            const input = document.querySelector('.chat-input');
+            const value = input.value.trim();
+            if (value) {
+                window.location.href = `qa_page.html?q=${encodeURIComponent(value)}`;
+            } else {
+                // If empty, use the placeholder text as the query
+                const placeholder = input.getAttribute('placeholder');
+                window.location.href = `qa_page.html?q=${encodeURIComponent(placeholder)}`;
             }
         }
 

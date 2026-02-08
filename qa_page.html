@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #FD4C5D; /* Guizhou Red */
+            --primary-color: #409EFF; /* Light Blue */
             --bg-color: #F7F8FA;
             --text-main: #333333;
             --text-sub: #666666;
@@ -98,18 +98,191 @@
         /* Content Section */
         .content-section {
             flex: 1;
-            padding: 0 15px 20px;
+            padding: 0 15px 100px; /* Added bottom padding for input bar */
             display: flex;
             flex-direction: column;
-            align-items: center;
+            overflow-y: auto;
         }
 
-        .answer-image {
+        /* Chat Styles */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             width: 100%;
-            max-width: 600px;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .message-row {
+            display: flex;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .message-row.user {
+            justify-content: flex-end;
+        }
+
+        .message-row.agent {
+            justify-content: flex-start;
+        }
+
+        .bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .bubble.user {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .bubble.agent {
+            background-color: #fff;
+            color: var(--text-main);
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            max-width: 90%; /* Increase width for complex content */
+        }
+
+        /* Structured Answer Styles */
+        .answer-content {
+            font-size: 14px;
+        }
+
+        .answer-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .divider {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin: 15px 0;
+        }
+
+        .day-plan {
+            margin-bottom: 20px;
+        }
+
+        .day-title {
+            font-size: 15px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .meta-info {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            background: #f9f9f9;
+            padding: 5px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .section-label {
+            font-weight: 600;
+            margin: 10px 0 5px;
+            color: #444;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        /* Cost Table */
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+
+        .cost-table th, .cost-table td {
+            border: 1px solid #eee;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .cost-table th {
+            background-color: #f8f8f8;
+            font-weight: 600;
+        }
+
+        .total-row {
+            background-color: #ecf5ff;
+            color: var(--primary-color);
+        }
+
+        .tips-section {
+            background: #ecf5ff;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        /* Bottom Chat Input (Copied from index.html) */
+        .chat-input-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 20px 30px; /* Extra padding for bottom safe area */
+            background: #fff;
+            z-index: 99;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+        }
+
+        .chat-input-box {
+            display: flex;
+            align-items: center;
+            background: #F0F2F5;
+            border-radius: 24px;
+            padding: 8px 12px;
+            gap: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .voice-btn, .chat-send-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .chat-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 14px;
+            color: #333;
+            padding: 0 5px;
+        }
+
+        .chat-send-btn {
+            background: var(--primary-color);
+            color: #fff;
         }
 
     </style>
@@ -121,7 +294,7 @@
         <a href="index.html" class="back-btn">
             <i class="fas fa-chevron-left"></i>
         </a>
-        <div class="header-title">智能问答</div>
+        <div class="header-title">旅游规划小助手</div>
     </div>
 
     <!-- Top Info -->
@@ -133,8 +306,193 @@
 
     <!-- Main Image Content -->
     <div class="content-section">
-        <img src="旅行规划.png" alt="Travel Plan" class="answer-image">
+        <div class="chat-container" id="chatContainer">
+            <!-- Messages will be injected here via JS -->
+        </div>
     </div>
 
+    <!-- Bottom Input Area -->
+    <div class="chat-input-area">
+        <div class="chat-input-box">
+            <div class="voice-btn">
+                <i class="fas fa-microphone"></i>
+            </div>
+            <input type="text" class="chat-input" placeholder="继续提问..." id="chatInput" onkeypress="handleEnter(event)">
+            <div class="chat-send-btn" onclick="sendNewMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const question = params.get('q');
+            const chatContainer = document.getElementById('chatContainer');
+
+            if (question) {
+                // 1. Add User Question (Right)
+                const userRow = document.createElement('div');
+                userRow.className = 'message-row user';
+                userRow.innerHTML = `<div class="bubble user">${escapeHtml(question)}</div>`;
+                chatContainer.appendChild(userRow);
+
+                // 2. Add Agent Answer (Left) with Delay
+                setTimeout(() => {
+                    const agentRow = document.createElement('div');
+                    agentRow.className = 'message-row agent';
+                    
+                    // Structured HTML Answer
+                    const answerHTML = `
+                        <div class="bubble agent">
+                            <div class="answer-content">
+                                <h3 class="answer-title">🌄 贵州3日游精华行程规划</h3>
+                                <hr class="divider">
+                                
+                                <div class="day-plan">
+                                    <h4 class="day-title">第1天：贵阳→黔东南苗族侗族自治州·西江千户苗寨</h4>
+                                    <p class="meta-info">🚗 交通：自驾（2.5小时）</p>
+                                    <ul class="timeline-list">
+                                        <li><strong>13:00-15:30</strong> 从贵阳出发，沿途欣赏喀斯特山地风光，抵达全球最大苗族聚居地——<strong>西江千户苗寨</strong>。</li>
+                                    </ul>
+                                    <p class="section-label">🏞️ 游玩亮点：</p>
+                                    <ul class="highlight-list">
+                                        <li><strong>15:30-20:30</strong> 沉浸式体验苗族文化！
+                                            <ul>
+                                                <li><strong>吊脚楼群</strong>：层层叠叠的木质建筑在夕阳下金光闪闪，宛如“千与千寻”现实版。</li>
+                                                <li><strong>风雨桥漫步</strong>：打卡网红拍照点，感受苗寨流水人家的诗意。</li>
+                                                <li><strong>夜间万家灯火</strong>：登观景台俯瞰苗寨夜景，繁星与灯光交相辉映（建议游玩5小时）。</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <p class="section-label">🍜 美食推荐：</p>
+                                    <ul class="food-list">
+                                        <li><strong>苗家糍粑肉</strong>：糯叽叽的糍粑包裹咸香肉馅，苗族特色小吃必尝！</li>
+                                        <li><strong>苗王鱼</strong>：酸辣鲜香的黔菜代表，鱼肉嫩滑，汤汁拌饭绝配！</li>
+                                    </ul>
+                                    <p class="section-label">🏨 酒店推荐：</p>
+                                    <ul class="hotel-list">
+                                        <li><strong>云隐仙居·陌野高空全景美宿(四号风雨桥博物馆店)</strong>：全景落地窗直面苗寨，夜晚枕着星光入眠✨</li>
+                                    </ul>
+                                </div>
+
+                                <div class="day-plan">
+                                    <h4 class="day-title">第2天：黔东南→贵阳·红色艺术与古镇之旅</h4>
+                                    <p class="section-label">🌅 上午：红飘带艺术馆（2小时）</p>
+                                    <ul class="timeline-list">
+                                        <li><strong>08:30-10:30</strong> 自驾前往贵阳，探秘<strong>红飘带艺术馆</strong>（长征主题沉浸式展览，光影科技震撼人心）。</li>
+                                    </ul>
+                                    <p class="section-label">🏯 下午：青岩古镇+黔灵山公园</p>
+                                    <ul class="timeline-list">
+                                        <li><strong>12:30-15:00</strong> <strong>青岩古镇</strong>：600年军事古镇！爬城墙、尝玫瑰糖，打卡《寻枪》取景地（游玩2小时）。</li>
+                                        <li><strong>15:30-17:30</strong> <strong>黔灵山公园</strong>：与野生猕猴互动🐒，登瞰筑亭俯瞰贵阳全景（游玩2小时）。</li>
+                                    </ul>
+                                    <p class="section-label">🍗 美食推荐：</p>
+                                    <ul class="food-list">
+                                        <li><strong>香酥鸭</strong>：麻到嘴唇跳舞的贵阳名小吃，酥脆爆香！</li>
+                                        <li><strong>豆米火锅</strong>：豆汤浓稠，涮野菜和五花肉，麻辣鲜香超下饭！</li>
+                                    </ul>
+                                    <p class="section-label">🏨 酒店推荐：</p>
+                                    <ul class="hotel-list">
+                                        <li><strong>雅斯特国际酒店(贵阳喷水池地铁站黔灵山公园店)</strong>：交通便利，步行可达夜市，房间宽敞舒适🛋️</li>
+                                    </ul>
+                                </div>
+
+                                <div class="day-plan">
+                                    <h4 class="day-title">第3天：贵阳→黄果树瀑布→返程</h4>
+                                    <p class="section-label">💦 全天：黄果树瀑布（5小时）</p>
+                                    <ul class="timeline-list">
+                                        <li><strong>08:30-10:00</strong> 自驾前往亚洲第一大瀑布！
+                                            <ul>
+                                                <li><strong>水帘洞穿越</strong>：近距离感受瀑布轰鸣，水雾扑面的清凉（记得带雨衣🌧️）。</li>
+                                                <li><strong>陡坡塘瀑布</strong>：86版《西游记》取景地，彩虹常挂瀑前🌈。</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>15:00-16:30</strong> 返回贵阳，结束行程。</li>
+                                    </ul>
+                                    <p class="section-label">🍲 午餐建议：</p>
+                                    <p class="simple-text">景区内品尝布依族酸汤鱼，酸辣开胃！</p>
+                                </div>
+
+                                <hr class="divider">
+
+                                <h3 class="answer-title">💰 费用总览（1人）</h3>
+                                <table class="cost-table">
+                                    <thead>
+                                        <tr>
+                                            <th>项目</th>
+                                            <th>预计费用（元）</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>车费（油费）</td><td>515</td></tr>
+                                        <tr><td>住宿（2晚）</td><td>525</td></tr>
+                                        <tr><td>门票</td><td>260</td></tr>
+                                        <tr><td>餐饮（3天）</td><td>300</td></tr>
+                                        <tr class="total-row"><td><strong>合计</strong></td><td><strong>1600</strong></td></tr>
+                                    </tbody>
+                                </table>
+
+                                <hr class="divider">
+
+                                <div class="tips-section">
+                                    <p class="section-label">🌟 小贴士：</p>
+                                    <ul class="tips-list">
+                                        <li>苗寨建议租苗族服饰拍照（约50元/小时），黄果树瀑布丰水期（5-10月）更壮观！</li>
+                                        <li>自驾灵活性强，但景区停车费已含在车费中，无需额外预算。</li>
+                                        <li>费用按中档消费规划，性价比超高！</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    agentRow.innerHTML = answerHTML;
+                    chatContainer.appendChild(agentRow);
+                    
+                    // Scroll to bottom
+                    window.scrollTo(0, document.body.scrollHeight);
+                }, 600);
+            }
+        });
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                sendNewMessage();
+            }
+        }
+
+        function sendNewMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const chatContainer = document.getElementById('chatContainer');
+
+            // Add user message
+            const userRow = document.createElement('div');
+            userRow.className = 'message-row user';
+            userRow.innerHTML = `<div class="bubble user">${escapeHtml(text)}</div>`;
+            chatContainer.appendChild(userRow);
+
+            input.value = '';
+            window.scrollTo(0, document.body.scrollHeight);
+
+            // Mock auto-reply for subsequent messages
+            setTimeout(() => {
+                const agentRow = document.createElement('div');
+                agentRow.className = 'message-row agent';
+                agentRow.innerHTML = `<div class="bubble agent">收到您的反馈！如需更多详细规划，请继续提问。</div>`;
+                chatContainer.appendChild(agentRow);
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
