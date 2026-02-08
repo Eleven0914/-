@@ -1,0 +1,47 @@
+{
+  "color": {
+    "primary": {
+      "main": { "value": "#5E6E82", "type": "color" },
+      "dark": { "value": "#4A5568", "type": "color" }
+    },
+    "accent": {
+      "main": { "value": "#FF7157", "type": "color" },
+      "text": { "value": "#FFFFFF", "type": "color" }
+    },
+    "secondary": {
+      "main": { "value": "#2C5282", "type": "color" }
+    },
+    "background": {
+      "page": { "value": "#F5F7FA", "type": "color" },
+      "card": { "value": "#FFFFFF", "type": "color" }
+    },
+    "text": {
+      "main": { "value": "#1A202C", "type": "color" },
+      "sub": { "value": "#2D3748", "type": "color" },
+      "body": { "value": "#4A5568", "type": "color" },
+      "aux": { "value": "#718096", "type": "color" }
+    },
+    "functional": {
+      "border": { "value": "#E2E8F0", "type": "color" },
+      "success": { "value": "#38B2AC", "type": "color" },
+      "warning": { "value": "#ED8936", "type": "color" },
+      "error": { "value": "#E53E3E", "type": "color" }
+    }
+  },
+  "font": {
+    "family": {
+      "base": { "value": "\"PingFang SC\", \"Microsoft YaHei\", -apple-system, BlinkMacSystemFont, Roboto, sans-serif", "type": "fontFamilies" }
+    },
+    "size": {
+      "base": { "value": "12px", "type": "fontSizes" },
+      "title": { "value": "17px", "type": "fontSizes" },
+      "h1": { "value": "24px", "type": "fontSizes" },
+      "h2": { "value": "15px", "type": "fontSizes" }
+    }
+  },
+  "dimensions": {
+    "navHeight": { "value": "49px", "type": "dimension" },
+    "headerHeight": { "value": "44px", "type": "dimension" },
+    "cardRadius": { "value": "16px", "type": "dimension" }
+  }
+}
