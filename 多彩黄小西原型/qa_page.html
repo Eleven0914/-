@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>智能问答 - 多彩黄小西</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FD4C5D; /* Guizhou Red */
+            --bg-color: #F7F8FA;
+            --text-main: #333333;
+            --text-sub: #666666;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .custom-header {
+            position: sticky;
+            top: 0;
+            height: 44px;
+            padding-top: env(safe-area-inset-top);
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            padding-right: 15px;
+            background: #fff;
+            z-index: 100;
+        }
+
+        .back-btn {
+            font-size: 20px;
+            color: #333;
+            text-decoration: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 40px; /* Balance back button */
+        }
+
+        /* Top Info Section */
+        .top-info-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px 20px;
+            background: #fff;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .hint-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .sub-hint {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        /* Content Section */
+        .content-section {
+            flex: 1;
+            padding: 0 15px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .answer-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="custom-header">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <div class="header-title">智能问答</div>
+    </div>
+
+    <!-- Top Info -->
+    <div class="top-info-section">
+        <img src="honyifu.png" alt="Huang Xiaoxi" class="logo-img">
+        <div class="hint-text">多彩黄小西为您规划</div>
+        <div class="sub-hint">根据您的需求生成的旅行建议</div>
+    </div>
+
+    <!-- Main Image Content -->
+    <div class="content-section">
+        <img src="旅行规划.png" alt="Travel Plan" class="answer-image">
+    </div>
+
+</body>
+</html>
